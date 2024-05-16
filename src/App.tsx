@@ -9,14 +9,7 @@ function App() {
   useEffect(() => {
     axios
       .get(
-        "https://b25hr3zed5.execute-api.eu-north-1.amazonaws.com/songsappdeploymentstage/hello-world",
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "POST, GET",
-            "Access-Control-Allow-Headers": "Content-Type",
-          },
-        }
+        "https://b25hr3zed5.execute-api.eu-north-1.amazonaws.com/songsappdeploymentstage/hello-world"
       )
       .then((response) => setApiResponse(response.data))
       .catch((error) => console.log(error));

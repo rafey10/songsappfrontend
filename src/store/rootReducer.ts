@@ -1,7 +1,7 @@
 import { combineSlices } from "@reduxjs/toolkit";
 import { combineEpics } from "redux-observable";
 import { songsEpic } from "../songs/songs.epics";
-import { toastSlice } from "../components/toast/toastSlice";
+import { toastSlice } from "../components/Toast/toastSlice";
 import { songsSlice } from "../songs/songsSlice";
 
 export const rootEpic = combineEpics(songsEpic);

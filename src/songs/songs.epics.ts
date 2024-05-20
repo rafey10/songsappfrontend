@@ -10,7 +10,7 @@ import { of } from "rxjs";
 import { fetchAvailableSongsAction, submitSongAction } from "./songs.actions";
 import { fetchAvailableSongsDoneAction, setAddedSongAction } from "./songsSlice";
 import { getFailureReason } from "../api/errors";
-import { showToastAction } from "../components/toast/toastSlice";
+import { showToastAction } from "../components/Toast/toastSlice";
 
 const showErrorToaster = (msg: string | undefined) => {
   return showToastAction({

@@ -1,8 +1,8 @@
 import { AppEpic } from "../../store/store.types";
-import { ToastMessage } from "./toast.types";
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { filter, of } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
+import { ToastMessage } from "./toast.types";
 
 export type ToastSliceInitialState = {
     toast?: ToastMessage;

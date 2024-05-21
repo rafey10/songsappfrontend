@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAvailableSongsAction } from "../songs/songs.actions";
-import SongsTable from "../components/SongsTable/SongsTable";
+import SongsTable from "../components/songsTable/SongsTable";
 import { selectSongs } from "../songs/songsSlice";
 import styled from "styled-components";
 

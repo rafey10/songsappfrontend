@@ -1,5 +1,5 @@
 import { FC, useCallback } from "react";
-import SongsTable from "../components/SongsTable/SongsTable";
+import SongsTable from "../components/songsTable/SongsTable";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSelectedSong, setActivePageAction } from "../songs/songsSlice";
 import styled from "styled-components";

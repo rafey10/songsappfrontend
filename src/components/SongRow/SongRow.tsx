@@ -1,5 +1,4 @@
 import { FC, useCallback } from "react";
-import { SongRowProps } from "./SongRow.types";
 import { Table } from "semantic-ui-react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -7,6 +6,7 @@ import {
   setActivePageAction,
   setSelectedSongAction,
 } from "../../songs/songsSlice";
+import { SongRowProps } from "./SongRow.types";
 
 const Cell = styled(Table.Cell)`
   height: 50px;

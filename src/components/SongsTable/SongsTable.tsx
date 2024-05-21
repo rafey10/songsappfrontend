@@ -1,8 +1,7 @@
 import { FC, useCallback, useState } from "react";
-import { SongsTableProps } from "./SongsTable.types";
 import { Table } from "semantic-ui-react";
 import styled from "styled-components";
-import SongRow from "../SongRow/SongRow";
+import SongRow from "../songRow/SongRow";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectActivePage,
@@ -17,6 +16,7 @@ import { ReactComponent as UpArrowSvg } from "../../UpArrow.svg";
 import { ReactComponent as DownArrowSvg } from "../../DownArrow.svg";
 import { ReactComponent as NotFoundSvg } from "../../NotFound.svg";
 import { SPACINGS } from "../../styles/constants";
+import { SongsTableProps } from "./SongsTable.types";
 
 const StyledTable = styled(Table)`
   margin: 10px 20px 20px 20px;

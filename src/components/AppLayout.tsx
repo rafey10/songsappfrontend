@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from "react";
 import styled from "styled-components";
-import { TABLE_BREAKPOINT } from "../../styles/constants";
-import NavBar from "../NavBar";
+import { TABLE_BREAKPOINT } from "../styles/constants";
+import NavBar from "./NavBar";
 
 export const Container = styled.div`
   display: flex;

@@ -5,7 +5,7 @@ import { selectSongs, setActivePageAction } from "../songs/songsSlice";
 import { Button } from "@mui/material";
 import styled from "styled-components";
 import _ from "lodash";
-import SongsTable from "../components/SongsTable/SongsTable";
+import SongsTable from "../components/SongsTable";
 
 const ButtonContainer = styled.div`
   text-align: right;

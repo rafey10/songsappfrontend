@@ -1,22 +1,22 @@
 import { FC, useCallback, useState } from "react";
 import { Table } from "semantic-ui-react";
 import styled from "styled-components";
-import SongRow from "../songRow/SongRow";
+import SongRow from "./SongRow";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectActivePage,
   selectIsSearchLoading,
   selectSearchTerm,
   setActivePageAction,
-} from "../../songs/songsSlice";
+} from "../songs/songsSlice";
 import _ from "lodash";
 import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
 
-import { ReactComponent as UpArrowSvg } from "../../UpArrow.svg";
-import { ReactComponent as DownArrowSvg } from "../../DownArrow.svg";
-import { ReactComponent as NotFoundSvg } from "../../NotFound.svg";
-import { SPACINGS } from "../../styles/constants";
-import { Song } from "../../songs/songs.types";
+import { ReactComponent as UpArrowSvg } from "../UpArrow.svg";
+import { ReactComponent as DownArrowSvg } from "../DownArrow.svg";
+import { ReactComponent as NotFoundSvg } from "../NotFound.svg";
+import { SPACINGS } from "../styles/constants";
+import { Song } from "../songs/songs.types";
 
 const StyledTable = styled(Table)`
   margin: 10px 20px 20px 20px;

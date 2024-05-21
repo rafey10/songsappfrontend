@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 import {
   setActivePageAction,
   setSelectedSongAction,
-} from "../../songs/songsSlice";
-import { Song } from "../../songs/songs.types";
+} from "../songs/songsSlice";
+import { Song } from "../songs/songs.types";
 
 const Cell = styled(Table.Cell)`
   height: 50px;

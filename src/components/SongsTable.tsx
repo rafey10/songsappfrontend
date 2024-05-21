@@ -63,9 +63,10 @@ const NotFoundIcon = styled(NotFoundSvg)`
 `;
 
 const ButtonsContainer = styled.div`
-  margin: 0px 0px 0px ${SPACINGS.large}px;
+  margin: 0px 35px 15px 25px;
   display: flex;
   gap: ${SPACINGS.medium}px;
+  flex-direction: row-reverse;
 `;
 
 type SongsTableProps = {

@@ -19,6 +19,8 @@ const FlexWrap = styled.div`
 const ButtonContainer = styled.div`
   text-align: right;
   margin-top: 20px;
+  display: flex;
+  gap: 10px;
 `;
 
 const Heading = styled.h2`
@@ -35,55 +37,81 @@ const SubmitSongPage: FC = () => {
   const [songGenre, setSongGenre] = useState("");
   const [songLength, setSongLength] = useState("");
   const [songYear, setSongYear] = useState("");
+  const [songAdded, setSongAdded] = useState(false);
+
   const handleSongNameInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setSongName(event.target.value);
+      setSongName(event.target.value.trim());
     },
     []
   );
   const handleSongAlbumInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setSongAlbum(event.target.value);
+      setSongAlbum(event.target.value.trim());
     },
     []
   );
   const handleSongArtistInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setSongArtist(event.target.value);
+      setSongArtist(event.target.value.trim());
     },
     []
   );
   const handleSongLengthInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setSongLength(event.target.value);
+      setSongLength(event.target.value.trim());
     },
     []
   );
   const handleSongGenreInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setSongGenre(event.target.value);
+      setSongGenre(event.target.value.trim());
     },
     []
   );
   const handleSongYearInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setSongYear(event.target.value);
+      setSongYear(event.target.value.trim());
     },
     []
   );
-  const isSongNameError = addedSongs
+
+  const isTextEntryInvalid = function (entry: string) {
+    return entry.length > 200 || !/^[a-zA-Z]+$/.test(entry);
+  };
+
+  const isSongLengthInvalid = function (entry: string) {
+    return !/^([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/.test(entry);
+  };
+
+  const isSongYearInvalid = function (entry: string) {
+    return (
+      !/^\d+$/.test(entry) || parseInt(entry) > 2024 || parseInt(entry) < 1800
+    );
+  };
+
+  const isSongNameAlreadyAdded = addedSongs
     .filter((song) => song.song === songName)
     .at(0)
     ? true
     : false;
 
+  const isSongNameError =
+    isSongNameAlreadyAdded ||
+    isTextEntryInvalid(songName.trim().replace(/\s+/g, ""));
+
   const isFormStateValid =
     !isSongNameError &&
-    songArtist !== "" &&
-    songAlbum !== "" &&
-    songGenre !== "" &&
-    songLength !== "" &&
-    songYear !== "";
+    !isTextEntryInvalid(songArtist.trim().replace(/\s+/g, "")) &&
+    !isTextEntryInvalid(songAlbum.trim().replace(/\s+/g, "")) &&
+    !isTextEntryInvalid(songGenre.trim().replace(/\s+/g, "")) &&
+    !isSongLengthInvalid(songLength.trim().replace(/\s+/g, "")) &&
+    !isSongYearInvalid(songYear.trim().replace(/\s+/g, ""));
+
+  const handleGoBackClick = useCallback(() => {
+    setSongAdded(false);
+    dispatch(setActivePageAction("entryPage"));
+  }, [dispatch]);
 
   const handleSongSubmitClick = useCallback(() => {
     const song: SubmitSongParams = {
@@ -96,7 +124,7 @@ const SubmitSongPage: FC = () => {
     };
     dispatch(submitSongAction(song));
     dispatch(fetchAvailableSongsAction());
-    dispatch(setActivePageAction("entryPage"));
+    setSongAdded(true);
   }, [
     dispatch,
     songName,
@@ -117,8 +145,12 @@ const SubmitSongPage: FC = () => {
           label="Song Name"
           variant="outlined"
           required
-          helperText="Song must not already be added"
-          error={isSongNameError}
+          helperText={
+            songName !== "" && isSongNameError
+              ? "Song must not already be added. Maximum 200 characters [a-z, A-Z]."
+              : null
+          }
+          error={songName === "" ? false : isSongNameError}
           onChange={handleSongNameInput}
         />
         <TextField
@@ -126,47 +158,98 @@ const SubmitSongPage: FC = () => {
           label="Artist"
           variant="outlined"
           required
+          helperText={
+            songArtist !== "" &&
+            isTextEntryInvalid(songArtist.trim().replace(/\s+/g, ""))
+              ? "Maximum 200 characters [a-z, A-Z]."
+              : null
+          }
           onChange={handleSongArtistInput}
+          error={
+            songArtist === ""
+              ? false
+              : isTextEntryInvalid(songArtist.trim().replace(/\s+/g, ""))
+          }
         />
         <TextField
           id="outlined-basic"
           label="Album"
           variant="outlined"
           required
+          helperText={
+            songAlbum !== "" &&
+            isTextEntryInvalid(songAlbum.trim().replace(/\s+/g, ""))
+              ? "Maximum 200 characters [a-z, A-Z]."
+              : null
+          }
           onChange={handleSongAlbumInput}
+          error={
+            songAlbum === ""
+              ? false
+              : isTextEntryInvalid(songAlbum.trim().replace(/\s+/g, ""))
+          }
         />
         <TextField
           id="outlined-basic"
           label="Genre"
           variant="outlined"
           required
+          helperText={
+            songGenre !== "" &&
+            isTextEntryInvalid(songGenre.trim().replace(/\s+/g, ""))
+              ? "Maximum 200 characters [a-z, A-Z]."
+              : null
+          }
           onChange={handleSongGenreInput}
+          error={
+            songGenre === ""
+              ? false
+              : isTextEntryInvalid(songGenre.trim().replace(/\s+/g, ""))
+          }
         />
         <TextField
           id="outlined-basic"
           label="Length"
           variant="outlined"
           required
-          helperText="Length must be input in the HH:MM:SS format e.g. 00:02:30"
+          helperText="Must be input in HH:MM:SS format e.g. 00:02:30"
           onChange={handleSongLengthInput}
+          error={
+            songLength === ""
+              ? false
+              : isSongLengthInvalid(songLength.trim().replace(/\s+/g, ""))
+          }
         />
         <TextField
           id="outlined-basic"
           label="Year"
           variant="outlined"
           required
-          helperText="Year Input must be a 4 digit number e.g. 2019"
+          helperText="Input must be a valid year"
           onChange={handleSongYearInput}
+          error={
+            songYear === ""
+              ? false
+              : isSongYearInvalid(songYear.trim().replace(/\s+/g, ""))
+          }
         />
         <ButtonContainer>
           <Button
             variant="contained"
             color="inherit"
             size="large"
+            onClick={handleGoBackClick}
+          >
+            Go Back
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
             onClick={handleSongSubmitClick}
             disabled={!isFormStateValid}
           >
-            + Add Song
+            {songAdded ? "+ Add Another Song" : "+ Add Song"}
           </Button>
         </ButtonContainer>
       </FlexWrap>

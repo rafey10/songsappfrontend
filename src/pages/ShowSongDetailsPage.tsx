@@ -35,7 +35,7 @@ const ShowSongDetailsPage: FC = () => {
   return (
     <>
     <Heading> Song Details Page</Heading>
-    <SubHeading>You can view the Song details here</SubHeading>
+    <SubHeading>You can view details about your song here.</SubHeading>
       <SongsTable songs={songs}></SongsTable>
       <ButtonContainer>
         <Button

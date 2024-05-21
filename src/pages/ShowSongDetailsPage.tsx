@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectSelectedSong, setActivePageAction } from "../songs/songsSlice";
 import styled from "styled-components";
 import { Button } from "@mui/material";
-import SongsTable from "../components/songsTable/SongsTable";
+import SongsTable from "../components/SongsTable/SongsTable";
 
 const ButtonContainer = styled.div`
   text-align: right;

@@ -16,7 +16,7 @@ import { ReactComponent as UpArrowSvg } from "../../UpArrow.svg";
 import { ReactComponent as DownArrowSvg } from "../../DownArrow.svg";
 import { ReactComponent as NotFoundSvg } from "../../NotFound.svg";
 import { SPACINGS } from "../../styles/constants";
-import { SongsTableProps } from "./SongsTable.types";
+import { Song } from "../../songs/songs.types";
 
 const StyledTable = styled(Table)`
   margin: 10px 20px 20px 20px;
@@ -67,6 +67,10 @@ const ButtonsContainer = styled.div`
   display: flex;
   gap: ${SPACINGS.medium}px;
 `;
+
+type SongsTableProps = {
+  songs: Song[];
+};
 
 const SongsTable: FC<SongsTableProps> = ({ songs }) => {
   const dispatch = useDispatch();
@@ -213,14 +217,14 @@ const SongsTable: FC<SongsTableProps> = ({ songs }) => {
                   Sort by Year <DownArrow />
                 </ToggleButton>
               </ToggleButtonGroup>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  onClick={handleSubmit}
-                >
-                  + Add Song
-                </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={handleSubmit}
+              >
+                + Add Song
+              </Button>
             </ButtonsContainer>
           )}
           <StyledTable selectable>

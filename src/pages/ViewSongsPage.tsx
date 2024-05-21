@@ -1,9 +1,17 @@
-import { FC, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAvailableSongsAction } from "../songs/songs.actions";
-import SongsTable from "../components/songsTable/SongsTable";
-import { selectSongs } from "../songs/songsSlice";
+import { selectSongs, setActivePageAction } from "../songs/songsSlice";
+import { Button } from "@mui/material";
 import styled from "styled-components";
+import SongsTable from "../components/songsTable/SongsTable";
+import _ from "lodash";
+
+const ButtonContainer = styled.div`
+  text-align: right;
+  margin: 10px 20px 0px 0px;
+  width: 98%;
+`;
 
 const Heading = styled.h2`
   margin: 20px 0px 0px 20px;
@@ -26,10 +34,26 @@ const SongsPage: FC = () => {
     dispatch(fetchAvailableSongsAction());
   }, [dispatch]);
 
+  const handleSubmit = useCallback(() => {
+    dispatch(setActivePageAction("submitSongPage"));
+  }, [dispatch]);
+
   return (
     <>
       <Heading>Songs Catalogue</Heading>
       <SubHeading>Click on a Song Name to see the details page.</SubHeading>
+      <ButtonContainer>
+        {_.isEmpty(songs) && (
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handleSubmit}
+          >
+            + Add Song
+          </Button>
+        )}
+      </ButtonContainer>
       <SongsTable songs={songs}></SongsTable>
     </>
   );

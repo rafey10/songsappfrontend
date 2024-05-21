@@ -221,7 +221,6 @@ const SongsTable: FC<SongsTableProps> = ({ songs }) => {
                 >
                   + Add Song
                 </Button>
-              {/* </ButtonsContainer> */}
             </ButtonsContainer>
           )}
           <StyledTable selectable>

@@ -120,7 +120,7 @@ const NavBar: FC = () => {
   useEffect(() => {
     if (hasUserInteracted.current) {
       if (debouncedSearchTerm) {
-        dispatch(setSearchTermAction(debouncedSearchTerm));
+        dispatch(setSearchTermAction(debouncedSearchTerm.trim()));
         dispatch(fetchAvailableSongsAction(undefined));
         dispatch(setIsSearchLoadingAction(false));
       } else {

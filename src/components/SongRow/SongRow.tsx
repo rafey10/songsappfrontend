@@ -6,7 +6,7 @@ import {
   setActivePageAction,
   setSelectedSongAction,
 } from "../../songs/songsSlice";
-import { SongRowProps } from "./SongRow.types";
+import { Song } from "../../songs/songs.types";
 
 const Cell = styled(Table.Cell)`
   height: 50px;
@@ -24,6 +24,10 @@ const StyledButton = styled.button`
   word-wrap: break-word;
   width: 100%;
 `;
+
+type SongRowProps = {
+  song?: Song;
+};
 
 const SongRow: FC<SongRowProps> = ({ song }) => {
   const dispatch = useDispatch();

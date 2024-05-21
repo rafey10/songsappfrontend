@@ -7,7 +7,7 @@ import {
   TABLE_BREAKPOINT,
 } from "../styles/constants";
 import { rem } from "polished";
-import { ReactComponent as ICELogo } from "../../ice_logo.svg";
+import { ReactComponent as ICELogo } from "../ice_logo.svg";
 import { Link } from "react-router-dom";
 import { Search, StrictSearchProps } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";

@@ -5,7 +5,7 @@ import {
   NAV_BAR_CONTENT_HEIGHT_MOBILE,
   SPACINGS,
   TABLE_BREAKPOINT,
-} from "../../styles/constants";
+} from "../styles/constants";
 import { rem } from "polished";
 import { ReactComponent as ICELogo } from "../../ice_logo.svg";
 import { Link } from "react-router-dom";
@@ -17,9 +17,9 @@ import {
   setActivePageAction,
   setIsSearchLoadingAction,
   setSearchTermAction,
-} from "../../songs/songsSlice";
+} from "../songs/songsSlice";
 import { useDebounce } from "usehooks-ts";
-import { fetchAvailableSongsAction } from "../../songs/songs.actions";
+import { fetchAvailableSongsAction } from "../songs/songs.actions";
 
 export const Container = styled.div`
   flex-shrink: 0;

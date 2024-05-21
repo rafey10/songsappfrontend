@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import { StoreProvider } from "./store/StoreProvider";
-import AppLayout from "./components/AppLayout/AppLayout";
+import AppLayout from "./components/appLayout/AppLayout";
 import AppRoutes from "./AppRoutes";
 import GlobalStyle from "./styles/GlobalStyle";
 

@@ -1,11 +1,3 @@
-// export type Dependencies = AuthDependencies &
-//   LayoutDependencies &
-//   CompanyDependencies &
-//   DealsUserAccountDependencies &
-//   AssetsDependencies &
-//   UserAccountDependencies &
-//   ClaimsDependencies;
-import { Action, ThunkAction } from "@reduxjs/toolkit";
 import { Action as ReduxAction } from "redux";
 import { rootReducer } from "./rootReducer";
 import { makeStore } from "./store";
@@ -27,10 +19,3 @@ export type AppState = AppStore["getState"];
 
 // Infer the `AppDispatch` type from the store itself
 export type AppDispatch = AppStore["dispatch"];
-
-export type AppThunk<ThunkReturnType = void> = ThunkAction<
-  ThunkReturnType,
-  RootState,
-  unknown,
-  Action
->;

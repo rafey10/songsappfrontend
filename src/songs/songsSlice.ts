@@ -55,7 +55,7 @@ export const songsSlice = createSlice({
   selectors: {
     selectSongs: ({ songs }) => songs || [],
     selectSearchTerm: ({ searchTerm }) => searchTerm,
-    selectIsSearchLoading: ({ isSearchLoading }) => isSearchLoading,
+    selectIsSearchLoading: ({ isSearchLoading }) => isSearchLoading || false,
     selectActivePage: ({ activePage }) => activePage,
     selectSelectedSong: ({ selectedSong }) => selectedSong,
   },

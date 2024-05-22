@@ -1,10 +1,9 @@
-import React, { FC } from "react";
-import "./App.css";
+import { FC } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { StoreProvider } from "./store/StoreProvider";
 import AppLayout from "./components/AppLayout";
 import AppRoutes from "./AppRoutes";
-import GlobalStyle from "./styles/GlobalStyle";
+import GlobalStyle from "./shared/GlobalStyle";
 // import axios from "axios";
 // import { useEffectOnce } from "usehooks-ts";
 

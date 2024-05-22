@@ -5,17 +5,16 @@ import SongRow from "./SongRow";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectActivePage,
-  selectIsSearchLoading,
   selectSearchTerm,
   setActivePageAction,
 } from "../songs/songsSlice";
 import _ from "lodash";
 import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
 
-import { ReactComponent as UpArrowSvg } from "../UpArrow.svg";
-import { ReactComponent as DownArrowSvg } from "../DownArrow.svg";
-import { ReactComponent as NotFoundSvg } from "../NotFound.svg";
-import { SPACINGS } from "../styles/constants";
+import { ReactComponent as UpArrowSvg } from "../shared/images/UpArrow.svg";
+import { ReactComponent as DownArrowSvg } from "../shared/images/DownArrow.svg";
+import { ReactComponent as NotFoundSvg } from "../shared/images/NotFound.svg";
+import { SPACINGS } from "../shared/constants";
 import { Song } from "../songs/songs.types";
 
 const StyledTable = styled(Table)`
@@ -76,7 +75,6 @@ type SongsTableProps = {
 const SongsTable: FC<SongsTableProps> = ({ songs }) => {
   const dispatch = useDispatch();
   const searchTerm = useSelector(selectSearchTerm);
-  const isSearchLoading = useSelector(selectIsSearchLoading);
   const activePage = useSelector(selectActivePage);
   const [sortByNameDescending, setSortByNameDescending] = useState(false);
   const [sortByYearDescending, setSortByYearDescending] = useState(false);
@@ -84,8 +82,8 @@ const SongsTable: FC<SongsTableProps> = ({ songs }) => {
   const [sortByYearAscending, setSortByYearAscending] = useState(false);
   const searchedSongs = songs.filter(
     (song) =>
-      song.artist.toLowerCase().startsWith(searchTerm?.toLowerCase() ?? "") ||
-      song.releaseYear === searchTerm
+      song.artist.toLowerCase().startsWith(searchTerm?.trim().toLowerCase() ?? "") ||
+      song.releaseYear.startsWith(searchTerm?.trim() ?? "")
   );
   const songsDefaultSort = songs;
   const searchedSongsDefaultSort = searchedSongs;
@@ -168,159 +166,165 @@ const SongsTable: FC<SongsTableProps> = ({ songs }) => {
 
   return (
     <>
-      {((searchTerm && _.isEmpty(searchedSongs)) ||
-        (!searchTerm && _.isEmpty(songs))) &&
-      !isSearchLoading ? (
+      {(searchTerm && _.isEmpty(searchedSongs)) ||
+      (!searchTerm && _.isEmpty(songs)) ? (
         <Error>
           <NotFoundIcon /> No Songs Found
         </Error>
       ) : (
         <>
-          {activePage !== "showSongPage" && (
-            <ButtonsContainer>
-              <ToggleButtonGroup
-                orientation="vertical"
-                color="primary"
-                size="small"
-              >
-                <ToggleButton
-                  value={""}
-                  selected={sortByNameAscending}
-                  onClick={handleSortByNameAscendingClick}
-                >
-                  Sort by Name <UpArrow />
-                </ToggleButton>
-                <ToggleButton
-                  value={""}
-                  selected={sortByNameDescending}
-                  onClick={handleSortByNameDescendingClick}
-                >
-                  Sort by Name <DownArrow />
-                </ToggleButton>
-              </ToggleButtonGroup>
-              <ToggleButtonGroup
-                orientation="vertical"
-                color="primary"
-                size="small"
-              >
-                <ToggleButton
-                  value={""}
-                  selected={sortByYearAscending}
-                  onClick={handleSortByYearAscendingClick}
-                >
-                  Sort by Year <UpArrow />
-                </ToggleButton>
-                <ToggleButton
-                  value={""}
-                  selected={sortByYearDescending}
-                  onClick={handleSortByYearDescendingClick}
-                >
-                  Sort by Year <DownArrow />
-                </ToggleButton>
-              </ToggleButtonGroup>
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                onClick={handleSubmit}
-              >
-                + Add Song
-              </Button>
-            </ButtonsContainer>
-          )}
-          <StyledTable selectable>
-            <TableHeader>
-              <Table.Row>
-                <Table.HeaderCell>Song</Table.HeaderCell>
-                <Table.HeaderCell>Artist</Table.HeaderCell>
-                <Table.HeaderCell>Album</Table.HeaderCell>
-                <Table.HeaderCell>Genre</Table.HeaderCell>
-                <Table.HeaderCell>Length</Table.HeaderCell>
-                <Table.HeaderCell>Year</Table.HeaderCell>
-              </Table.Row>
-            </TableHeader>
-            <Table.Body>
-              {searchTerm &&
-                !sortByNameAscending &&
-                !sortByNameDescending &&
-                !sortByYearAscending &&
-                !sortByYearDescending &&
-                searchedSongsDefaultSort.map((searchedSong) => (
-                  <SongRow song={searchedSong}></SongRow>
-                ))}
-              {searchTerm &&
-                sortByNameAscending &&
-                !sortByNameDescending &&
-                !sortByYearAscending &&
-                !sortByYearDescending &&
-                searchedSongsSortedByNameAscending.map((searchedSong) => (
-                  <SongRow song={searchedSong}></SongRow>
-                ))}
-              {searchTerm &&
-                !sortByNameAscending &&
-                sortByNameDescending &&
-                !sortByYearAscending &&
-                !sortByYearDescending &&
-                searchedSongsSortedByNameDescending.map((searchedSong) => (
-                  <SongRow song={searchedSong}></SongRow>
-                ))}
-              {searchTerm &&
-                !sortByNameAscending &&
-                !sortByNameDescending &&
-                sortByYearAscending &&
-                !sortByYearDescending &&
-                searchedSongsSortedByYearAscending.map((searchedSong) => (
-                  <SongRow song={searchedSong}></SongRow>
-                ))}
-              {searchTerm &&
-                !sortByNameAscending &&
-                !sortByNameDescending &&
-                !sortByYearAscending &&
-                sortByYearDescending &&
-                searchedSongsSortedByYearDescending.map((searchedSong) => (
-                  <SongRow song={searchedSong}></SongRow>
-                ))}
-
-              {!searchTerm &&
-                !sortByNameAscending &&
-                !sortByNameDescending &&
-                !sortByYearAscending &&
-                !sortByYearDescending &&
-                songsDefaultSort.map((song) => <SongRow song={song}></SongRow>)}
-              {!searchTerm &&
-                sortByNameAscending &&
-                !sortByNameDescending &&
-                !sortByYearAscending &&
-                !sortByYearDescending &&
-                songsSortedByNameAscending.map((song) => (
-                  <SongRow song={song}></SongRow>
-                ))}
-              {!searchTerm &&
-                !sortByNameAscending &&
-                sortByNameDescending &&
-                !sortByYearAscending &&
-                !sortByYearDescending &&
-                songsSortedByNameDescending.map((song) => (
-                  <SongRow song={song}></SongRow>
-                ))}
-              {!searchTerm &&
-                !sortByNameAscending &&
-                !sortByNameDescending &&
-                sortByYearAscending &&
-                !sortByYearDescending &&
-                songsSortedByYearAscending.map((song) => (
-                  <SongRow song={song}></SongRow>
-                ))}
-              {!searchTerm &&
-                !sortByNameAscending &&
-                !sortByNameDescending &&
-                !sortByYearAscending &&
-                sortByYearDescending &&
-                songsSortedByYearDescending.map((song) => (
-                  <SongRow song={song}></SongRow>
-                ))}
-            </Table.Body>
-          </StyledTable>
+          {(activePage === "entryPage" || activePage !== "showSongPage") &&
+            !_.isEmpty(songs) && (
+              <>
+                <ButtonsContainer>
+                  <ToggleButtonGroup
+                    orientation="vertical"
+                    color="primary"
+                    size="small"
+                  >
+                    <ToggleButton
+                      value={""}
+                      selected={sortByNameAscending}
+                      onClick={handleSortByNameAscendingClick}
+                    >
+                      Sort by Name <UpArrow />
+                    </ToggleButton>
+                    <ToggleButton
+                      value={""}
+                      selected={sortByNameDescending}
+                      onClick={handleSortByNameDescendingClick}
+                    >
+                      Sort by Name <DownArrow />
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                  <ToggleButtonGroup
+                    orientation="vertical"
+                    color="primary"
+                    size="small"
+                  >
+                    <ToggleButton
+                      value={""}
+                      selected={sortByYearAscending}
+                      onClick={handleSortByYearAscendingClick}
+                    >
+                      Sort by Year <UpArrow />
+                    </ToggleButton>
+                    <ToggleButton
+                      value={""}
+                      selected={sortByYearDescending}
+                      onClick={handleSortByYearDescendingClick}
+                    >
+                      Sort by Year <DownArrow />
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={handleSubmit}
+                  >
+                    + Add Song
+                  </Button>
+                </ButtonsContainer>
+              </>
+            )}
+          {(activePage === "entryPage" || activePage === "showSongPage") &&
+            !_.isEmpty(songs) && (
+              <StyledTable selectable>
+                <TableHeader>
+                  <Table.Row>
+                    <Table.HeaderCell>Song</Table.HeaderCell>
+                    <Table.HeaderCell>Artist</Table.HeaderCell>
+                    <Table.HeaderCell>Album</Table.HeaderCell>
+                    <Table.HeaderCell>Genre</Table.HeaderCell>
+                    <Table.HeaderCell>Length</Table.HeaderCell>
+                    <Table.HeaderCell>Year</Table.HeaderCell>
+                  </Table.Row>
+                </TableHeader>
+                <Table.Body>
+                  {searchTerm &&
+                    !sortByNameAscending &&
+                    !sortByNameDescending &&
+                    !sortByYearAscending &&
+                    !sortByYearDescending &&
+                    searchedSongsDefaultSort.map((searchedSong) => (
+                      <SongRow song={searchedSong}></SongRow>
+                    ))}
+                  {searchTerm &&
+                    sortByNameAscending &&
+                    !sortByNameDescending &&
+                    !sortByYearAscending &&
+                    !sortByYearDescending &&
+                    searchedSongsSortedByNameAscending.map((searchedSong) => (
+                      <SongRow song={searchedSong}></SongRow>
+                    ))}
+                  {searchTerm &&
+                    !sortByNameAscending &&
+                    sortByNameDescending &&
+                    !sortByYearAscending &&
+                    !sortByYearDescending &&
+                    searchedSongsSortedByNameDescending.map((searchedSong) => (
+                      <SongRow song={searchedSong}></SongRow>
+                    ))}
+                  {searchTerm &&
+                    !sortByNameAscending &&
+                    !sortByNameDescending &&
+                    sortByYearAscending &&
+                    !sortByYearDescending &&
+                    searchedSongsSortedByYearAscending.map((searchedSong) => (
+                      <SongRow song={searchedSong}></SongRow>
+                    ))}
+                  {searchTerm &&
+                    !sortByNameAscending &&
+                    !sortByNameDescending &&
+                    !sortByYearAscending &&
+                    sortByYearDescending &&
+                    searchedSongsSortedByYearDescending.map((searchedSong) => (
+                      <SongRow song={searchedSong}></SongRow>
+                    ))}
+                  {!searchTerm &&
+                    !sortByNameAscending &&
+                    !sortByNameDescending &&
+                    !sortByYearAscending &&
+                    !sortByYearDescending &&
+                    songsDefaultSort.map((song) => (
+                      <SongRow song={song}></SongRow>
+                    ))}
+                  {!searchTerm &&
+                    sortByNameAscending &&
+                    !sortByNameDescending &&
+                    !sortByYearAscending &&
+                    !sortByYearDescending &&
+                    songsSortedByNameAscending.map((song) => (
+                      <SongRow song={song}></SongRow>
+                    ))}
+                  {!searchTerm &&
+                    !sortByNameAscending &&
+                    sortByNameDescending &&
+                    !sortByYearAscending &&
+                    !sortByYearDescending &&
+                    songsSortedByNameDescending.map((song) => (
+                      <SongRow song={song}></SongRow>
+                    ))}
+                  {!searchTerm &&
+                    !sortByNameAscending &&
+                    !sortByNameDescending &&
+                    sortByYearAscending &&
+                    !sortByYearDescending &&
+                    songsSortedByYearAscending.map((song) => (
+                      <SongRow song={song}></SongRow>
+                    ))}
+                  {!searchTerm &&
+                    !sortByNameAscending &&
+                    !sortByNameDescending &&
+                    !sortByYearAscending &&
+                    sortByYearDescending &&
+                    songsSortedByYearDescending.map((song) => (
+                      <SongRow song={song}></SongRow>
+                    ))}
+                </Table.Body>
+              </StyledTable>
+            )}
         </>
       )}
     </>

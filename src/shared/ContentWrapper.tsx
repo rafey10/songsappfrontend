@@ -5,7 +5,7 @@ const Wrapper = styled.div`
   background-color: white;
   flex: 1 0 auto;
   text-align: center;
-  margin: 0px 400px 30px 400px;;
+  margin: 0px 400px 30px 400px;
 `;
 
 const Container = styled.div`
@@ -15,11 +15,7 @@ const Container = styled.div`
   padding: 24px 16px;
 `;
 
-type Props = {
-  size?: "normal" | "large";
-};
-
-const ContentWrapper: FC<PropsWithChildren<Props>> = ({ size, children }) => (
+const ContentWrapper: FC<PropsWithChildren> = ({ children }) => (
   <Wrapper>
     <Container>{children}</Container>
   </Wrapper>

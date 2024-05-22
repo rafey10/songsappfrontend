@@ -5,9 +5,9 @@ import {
   NAV_BAR_CONTENT_HEIGHT_MOBILE,
   SPACINGS,
   TABLE_BREAKPOINT,
-} from "../styles/constants";
+} from "../shared/constants";
 import { rem } from "polished";
-import { ReactComponent as ICELogo } from "../ice_logo.svg";
+import { ReactComponent as ICELogo } from "../shared/images/ice_logo.svg";
 import { Link } from "react-router-dom";
 import { Search, StrictSearchProps } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -113,6 +113,7 @@ const NavBar: FC = () => {
     data
   ) => {
     const searchTerm = data.value;
+    console.log(event);
     setSearchTermState(searchTerm);
     hasUserInteracted.current = true;
   };

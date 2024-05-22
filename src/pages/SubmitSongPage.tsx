@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useState } from "react";
-import ContentWrapper from "../styles/ContentWrapper";
+import ContentWrapper from "../shared/ContentWrapper";
 import styled from "styled-components";
 import { Button, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
